@@ -62,22 +62,18 @@ pipeline {
     steps {
 
         withCredentials([
-            file(credentialsId: 'gcp-sa-key', variable: 'GCP_KEY')
-        ]) {
+    file(credentialsId: 'gcp-sa-key', variable: 'GCP_KEY')
+]) {
+    sh '''
+        gcloud auth activate-service-account \
+            --key-file="${GCP_KEY}"
 
-            sh '''
-                cp ${GCP_KEY} ${GOOGLE_APPLICATION_CREDENTIALS}
+        gcloud config set project "${GCP_PROJECT_ID}"
 
-                gcloud auth activate-service-account \
-                    --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-
-                gcloud config set project ${GCP_PROJECT_ID}
-
-                gcloud auth list
-
-                gcloud config list
-            '''
-        }
+        gcloud auth list
+        gcloud config list
+    '''
+}
     }
 }
         stage('Verify GCP Access') {
