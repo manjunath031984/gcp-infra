@@ -34,7 +34,7 @@ pipeline {
 
     GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/gcp-key.json"
 
-
+    }
     stages {
 
         stage('Checkout') {
