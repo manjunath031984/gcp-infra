@@ -80,6 +80,26 @@ pipeline {
         }
     }
 }
+        stage('Verify GCP Access') {
+    steps {
+        sh '''
+            echo "Active Account"
+            gcloud auth list
+
+            echo "Current Project"
+            gcloud config get-value project
+
+            echo "Project Details"
+            gcloud projects describe ${GCP_PROJECT_ID}
+
+            echo "Buckets"
+            gcloud storage buckets list
+
+            echo "Compute Zones"
+            gcloud compute zones list --limit=5
+        '''
+    }
+}
 
         stage('Terraform Version') {
             steps {
