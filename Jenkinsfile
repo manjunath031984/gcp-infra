@@ -44,7 +44,6 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Check Tools') {
     stage('Check Tools') {
     steps {
         sh '''
