@@ -54,6 +54,6 @@ ENV PATH="/usr/local/bin:${PATH}"
 
 WORKDIR /var/jenkins_home
 
-EXPOSE 8080 50000
+EXPOSE 8090 50001
 
 CMD ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
