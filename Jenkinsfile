@@ -34,8 +34,6 @@ pipeline {
 
     GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/gcp-key.json"
 
-    GOOGLE_CLOUD_PROJECT = "gcp-dev-july-2026"
-}
 
     stages {
 
@@ -88,6 +86,43 @@ pipeline {
                 sh 'terraform version'
             }
         }
+        stage('Create Terraform Backend Bucket') {
+    steps {
+
+        withCredentials([
+            file(credentialsId: 'gcp-sa-key', variable: 'GCP_KEY')
+        ]) {
+
+            sh '''
+                cp ${GCP_KEY} ${GOOGLE_APPLICATION_CREDENTIALS}
+
+                gcloud auth activate-service-account \
+                    --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+
+                gcloud config set project ${GCP_PROJECT_ID}
+
+                if ! gcloud storage buckets describe gs://${TF_STATE_BUCKET} >/dev/null 2>&1; then
+
+                    echo "Creating bucket ${TF_STATE_BUCKET}..."
+
+                    gcloud storage buckets create gs://${TF_STATE_BUCKET} \
+                        --location=US-CENTRAL1 \
+                        --uniform-bucket-level-access
+
+                    echo "Enabling versioning..."
+
+                    gcloud storage buckets update gs://${TF_STATE_BUCKET} \
+                        --versioning
+
+                else
+
+                    echo "Bucket ${TF_STATE_BUCKET} already exists."
+
+                fi
+            '''
+        }
+    }
+}
 
         stage('Terraform Init') {
     steps {
