@@ -12,7 +12,7 @@ resource "google_compute_instance" "vm" {
 
       size = 20
 
-      type = "pd-balanced"
+      type = "pd-standard"
     }
   }
 
