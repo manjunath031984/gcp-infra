@@ -10,7 +10,7 @@ resource "google_compute_instance" "vm" {
 
       image = "projects/debian-cloud/global/images/family/debian-12"
 
-      size = 20
+      size = 10
 
       type = "pd-standard"
     }
