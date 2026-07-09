@@ -30,7 +30,7 @@ pipeline {
 
     GCP_PROJECT_ID = "gcp-dev-july-2026"
 
-    TF_STATE_BUCKET = "gcp-terraform-state-bucket"
+    TF_STATE_BUCKET = "gcp-dev-july-2026-terraform-state"
 
     GOOGLE_APPLICATION_CREDENTIALS = "${WORKSPACE}/gcp-key.json"
 
