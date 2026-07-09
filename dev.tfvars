@@ -1,9 +1,5 @@
-project_id   = "YOUR_PROJECT_ID"
-
+project_id   = "gcp-dev-july-2026"
 region       = "us-central1"
-
 zone         = "us-central1-a"
-
-vm_name      = "terraform-demo"
-
+vm_name      = "terraform-gcp"
 machine_type = "e2-micro"
